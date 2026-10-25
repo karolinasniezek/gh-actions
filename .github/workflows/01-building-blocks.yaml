@@ -9,9 +9,9 @@ jobs:
   goodbye-echo:
     runs-on: ubuntu-latest
     steps:
-      - name: Failed step
+      - name: Successful step
         run: |
-          echo "This step will fail"
-          exit 1
-      - name: This will not run
-        run: echo "This step will be skipped because the previous step failed"
+          echo "This step will succeed"
+          exit 0
+      - name: This will run
+        run: echo "This step will run because the previous step succeeded"
