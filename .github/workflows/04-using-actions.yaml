@@ -10,7 +10,7 @@ jobs:
       - name: Printing Folders
         run: ls
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "26.x"
       - name: Install Dependencies
