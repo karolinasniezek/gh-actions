@@ -14,6 +14,5 @@ jobs:
         with:
           node-version: "26.x"
       - name: Install Dependencies
-        run: |
-          cd ./using-actions/react-app
-          npm ci
+        run: npm ci
+        working-directory: ./using-actions/react-app
