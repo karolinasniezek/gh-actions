@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: "26.x"
       - name: Install Dependencies
-        run: node ci
+        run: npm ci
