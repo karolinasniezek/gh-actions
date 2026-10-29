@@ -1,0 +1,23 @@
+name: 06 - Contexts
+on:
+  workflow_dispatch:
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Contexts
+        run: |
+          echo "Event name ${{ github.event_name }}"
+          echo "Repository ${{ github.repository }}"
+          echo "Actor ${{ github.actor }}"
+          echo "Ref ${{ github.ref }}"
+          echo "SHA ${{ github.sha }}"
+          echo "Workflow ${{ github.workflow }}"
+          echo "Action ${{ github.action }}"
+          echo "Event path ${{ github.event_path }}"
+          echo "Server URL ${{ github.server_url }}"
+
+      - name: Retrieve Variables
+        run: |
+          echo "Variable value ${{vars.MY_VAR}}"
