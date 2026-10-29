@@ -1,4 +1,5 @@
 name: 06 - Contexts
+run-name: Show Contexts and Variables runner  ${{ runner.os }}
 on:
   workflow_dispatch:
 
