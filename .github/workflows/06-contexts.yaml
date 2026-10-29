@@ -7,9 +7,16 @@ on:
         type: boolean
         default: false
 
+env:
+  MY_WORKFLOW: "workflow"
+  MY_OVERWRITTEN_VAR: "workflow"
+
 jobs:
   echo:
     runs-on: ubuntu-latest
+    env:
+      MY_JOB: "job"
+      MY_OVERWRITTEN_VAR: "overwritten in job"
     steps:
       - name: Show Contexts
         run: |
@@ -26,3 +33,16 @@ jobs:
       - name: Retrieve Variables
         run: |
           echo "Variable value ${{vars.MY_VAR}}"
+      - name: Print Env Variables
+        env:
+          MY_OVERWRITTEN_VAR: "overwritten in step"
+        run: |
+          echo "Workflow env: ${{ env.MY_WORKFLOW }}"
+          echo "Overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
+          echo "Job env: ${{ env.MY_JOB }}"
+          echo "Debug input: ${{ inputs.debug }}"
+      - name: Print Step Env Variable
+        run: |
+          echo "Step overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
+          echo "Workflow env: ${{ env.MY_WORKFLOW }}"
+          echo "Job env: ${{ env.MY_JOB }}"
