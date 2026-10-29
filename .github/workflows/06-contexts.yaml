@@ -1,7 +1,11 @@
 name: 06 - Contexts
-run-name: Show Contexts and Variables runner  ${{ runner.os }}
+run-name: Show Contexts and Variables runner | DEBUG - ${{inputs.debug}}
 on:
   workflow_dispatch:
+    inputs:
+      debug:
+        type: boolean
+        default: false
 
 jobs:
   echo:
