@@ -18,7 +18,7 @@ on:
           - v2
           - v3
         description: Release from which to build and deploy
-        default: v1
+        default: v3
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,8 +27,9 @@ jobs:
         run: echo "Building for tag ${{ inputs.tag }}"
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{inputs.target}}
     if: ${{ !inputs.dry-run }}
+    environment: ${{inputs.target}}
+    needs: build
     steps:
       - name: Deploy
         run: echo "Deploying to ${{ inputs.target }}"
