@@ -1,0 +1,23 @@
+name: 14 - Caching
+
+on:
+  workflow_dispatch:
+    inputs:
+      use-cache:
+        description: "Whether to use cache"
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Cache
+        if: ${{ inputs.use-cache }}
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache
+          key: ${{ runner.os }}-cache
