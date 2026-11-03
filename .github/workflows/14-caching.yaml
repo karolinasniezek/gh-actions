@@ -12,12 +12,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 13-caching/react-app
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Use Cache
-        if: ${{ inputs.use-cache }}
-        uses: actions/cache@v3
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          path: ~/.cache
-          key: ${{ runner.os }}-cache
+          node-version: "26.x"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+      - name: Build project
+        run: npm run build
+      - name: Deploy to nonprod environment
+        run: echo "Deploying to nonprod environment"
