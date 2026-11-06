@@ -38,6 +38,7 @@ jobs:
           path: 13-caching/react-app/node_modules
           key: deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
       - name: Testing
         run: npm run test
