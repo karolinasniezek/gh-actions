@@ -29,7 +29,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "26.x"
+          node-version: ${{ github.event.inputs.node-version }}
       - name: Install dependencies
         run: npm ci
       - name: Testing
