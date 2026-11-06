@@ -15,8 +15,8 @@ on:
         type: choice
         options:
           - "26.x"
+          - "25.x"
           - "24.x"
-          - "22.x"
 jobs:
   build:
     runs-on: ubuntu-latest
