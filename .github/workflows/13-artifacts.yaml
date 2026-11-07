@@ -1,0 +1,61 @@
+name: 13 - Artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      node-version:
+        description: "Node.js version to use"
+        required: true
+        default: "26.x"
+        type: choice
+        options:
+          - "26.x"
+          - "25.x"
+          - "24.x"
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 13-caching/react-app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ github.event.inputs.node-version }}
+      - name: Download cache dependencies
+        uses: actions/cache@v5
+        id: cache-deps
+        with:
+          path: 13-caching/react-app/node_modules
+          key: deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Unit tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: 13-caching/react-app/build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test-build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+          path: 13-caching/react-app/build
+      - name: Show folder structure
+        run: ls -R
+      - name: Deploy
+        run: echo "Deploying build artifact"
