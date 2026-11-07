@@ -13,6 +13,9 @@ on:
           - "25.x"
           - "24.x"
 
+env:
+  build-artifact-key: build-artifact-${{ github.sha }}
+  test-coverage-report-key: test-coverage-${{ github.sha }}
 jobs:
   test-build:
     runs-on: ubuntu-latest
@@ -36,13 +39,18 @@ jobs:
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
       - name: Unit tests
-        run: npm test
+        run: npm run test -- --coverage
+      - name: Upload test results
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.test-coverage-report-key }}
+          path: 13-caching/react-app/coverage
       - name: Build
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
-          name: build-artifact
+          name: ${{ env.build-artifact-key }}
           path: 13-caching/react-app/build
   deploy:
     runs-on: ubuntu-latest
@@ -53,7 +61,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v7
         with:
-          name: build-artifact
+          name: ${{ env.build-artifact-key }}
           path: 13-caching/react-app/build
       - name: Show folder structure
         run: ls -R
