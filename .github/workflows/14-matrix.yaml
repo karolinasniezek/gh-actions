@@ -45,3 +45,6 @@ jobs:
           - color: red
             shape: triangle
             size: small
+    steps:
+      - name: Print matrix values
+        run: echo "Color: ${{ matrix.color }}, Shape: ${{ matrix.shape }}, Size: ${{ matrix.size }}"
