@@ -32,3 +32,16 @@ jobs:
         run: echo "Running tests on Node.js ${{ matrix.node-version }} and OS ${{ matrix.os }}"
       - name: Upload test results
         run: echo "Uploading test results for Node.js ${{ matrix.node-version }} and OS ${{ matrix.os }}"
+  include-example:
+    name: ${{ matrix.color}}-${{ matrix.shape}}-${{ matrix.size}}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        color: [red, blue]
+        shape: [circle, square]
+        size: [small, medium]
+        include:
+          - color: red
+            shape: triangle
+            size: small
