@@ -20,5 +20,3 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Perform tests
         run: echo "Running tests on Node.js ${{ matrix.node-version }} and OS ${{ matrix.os }}"
-      - name: Install dependencies
-        run: npm install
